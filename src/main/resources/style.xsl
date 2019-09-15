@@ -8,6 +8,12 @@
 
 	<xsl:variable name="vdStart" select="//ev/valid/@start" />
 	<xsl:variable name="vdEnd" select="//ev/valid/@end" />
+	
+	<xsl:variable name="lonValue" select="//ev/loc/geo/@lon" />
+	<xsl:variable name="latValue" select="//ev/loc/geo/@lat" />
+	<xsl:variable name="tableId" select="//ti/@table" />
+	<xsl:variable name="tmcIdValue" select="//ev/loc/start/@id" />
+	<xsl:variable name="tmcDirValue" select="//ev/loc/start/@dir" />
 
 	<xsl:template match="@lang" />
 	<xsl:template match="ti/@table" />
@@ -40,35 +46,22 @@
 		<xsl:if test="//ev/loc/@type ='geo'">
 			<xsl:element name="geo">
 				<type>Point</type>
-				<coordinates>
-					<xsl:text>-118.67265</xsl:text>
-					<xsl:text>53.924755</xsl:text>
+				<coordinates>				
+					<xsl:value-of select="$lonValue" />
+					<xsl:value-of select="$latValue" />
 				</coordinates>
 				<roadName>AB-40</roadName>
 			</xsl:element>
 		</xsl:if>
 		<xsl:if test="//ev/loc/@type ='tmc'">
 			<xsl:element name="tmc">
-				<table>4</table>
-				<id>12915</id>
-				<direction>+</direction>
+				<table><xsl:value-of select="$tableId" /></table>
+				<id><xsl:value-of select="$tmcIdValue" /></id>
+				<direction><xsl:value-of select="$tmcDirValue" /></direction>
 			</xsl:element>
 		</xsl:if>
 	</xsl:template>
-
-	<xsl:template match="ev/loc">
-		<xsl:if test="ev/loc/@type ='geo'">
-			<type>Point</type>
-			<coordinates>
-				<xsl:text>-118.67265</xsl:text>
-				<xsl:text>53.924755</xsl:text>
-			</coordinates>
-			<roadName>AB-40</roadName>
-		</xsl:if>
-	</xsl:template>
-
-
-
+	
 	<xsl:template match="ev/text">
 		<xsl:element name="description">
 			<xsl:value-of select="." />
