@@ -56,9 +56,7 @@ public class XmlUtilHandler {
 
 		try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
 			stream.forEach(s -> {
-				if (!(s.contains("<ti") || s.contains("</ti>"))) {
-					contentBuilder.append(s).append("\n");
-				}
+				contentBuilder.append(s).append("\n");
 			});
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
